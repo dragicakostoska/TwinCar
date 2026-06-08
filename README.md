@@ -1,61 +1,48 @@
-# TwinCar - Deep Learning for Automotive Classification
+# TwinCar: Deep Learning for Automotive Classification
 
-Deep learning for vehicle classification and fine-grained attribute prediction. TwinCar implements and compares CNN and Vision Transformer architectures with transfer learning to classify cars, predict make/model/year, and identify automotive attributes using Stanford Cars and CompCars datasets.
+TwinCar is a deep learning project focused on vehicle classification and automotive attribute prediction. It explores and compares multiple state-of-the-art convolutional neural networks (CNNs) and Vision Transformer architectures using transfer learning techniques on public automotive datasets.
 
----
+The project evaluates model performance across different datasets and training strategies, including fine-tuning and feature extraction, while providing a reproducible workflow for data preparation, training, evaluation, and inference.
 
-## Quick start
+## Features
 
-```bash
-git clone https://github.com/dragicakostoska/TwinCar.git
-cd TwinCar
-pip install -r requirements.txt
-```
+* Comparison of multiple deep learning architectures:
 
-Run the pipeline in order:
-- `notebooks/01_data_exploration.ipynb`
-- `notebooks/02_data_preparation.ipynb`
-- Pick a training notebook (e.g. `notebooks/03b_efficientnet_b0_v2.ipynb`)
-- Run the matching evaluation notebook
-- `notebooks/05_batch_prediction_demo.ipynb` for batch inference
+  * EfficientNet-B0
+  * ConvNeXt-Tiny
+  * Vision Transformer (ViT-B/16)
+  * Swin Transformer (Swin-T)
+  * DeiT
+* Support for multiple automotive datasets:
 
-Prerequisites: Python 3.8+, Jupyter, and a CUDA GPU (recommended).
-
----
-
-## What this project does
-
-- Classifies vehicles into fine-grained classes (Stanford Cars: 196 classes)
-- Predicts make, model, and year (CompCars: multi-task annotations)
-- Evaluates multiple architectures with transfer learning (fine-tuning and frozen layers)
-- Provides reproducible notebooks for data prep, training, evaluation, and inference
-- Outputs metrics, confusion matrices, loss curves, and inference demos
+  * Stanford Cars
+  * CompCars
+* Transfer learning experiments with both fine-tuning and frozen-backbone approaches
+* Comprehensive evaluation metrics and visualizations
+* Batch inference demonstrations
+* Structured and reproducible notebook-based workflow
 
 ---
 
-## Key features
-
-- Multi-architecture comparison: EfficientNet, ConvNeXt, ViT, Swin, DeiT
-- Two datasets: Stanford Cars (~16K images) and CompCars (~30K images)
-- Transfer learning strategies: full fine-tuning and partial layer freezing
-- Detailed evaluation: accuracy, precision, recall, F1, confusion matrices, inference time
-- Reproducible pipeline: structured notebooks for the full workflow
-
----
-
-## Repository structure
+## Project Structure
 
 ```text
 TwinCar/
 ├── notebooks/
 │   ├── 01_data_exploration.ipynb
 │   ├── 02_data_preparation.ipynb
+│   │
+│   ├── EfficientNet Experiments
 │   ├── 03a_efficientnet_b0_v1.ipynb
 │   ├── 03a_efficientnet_b0_v1_evaluation.ipynb
 │   ├── 03b_efficientnet_b0_v2.ipynb
 │   ├── 03b_efficientnet_b0_v2_evaluation.ipynb
+│   │
+│   ├── ConvNeXt Experiments
 │   ├── 04_convnext.ipynb
 │   ├── 04_convnext_tiny_evaluation.ipynb
+│   │
+│   ├── Stanford Cars Models
 │   ├── ConvNeXt_Tiny - Stanford Cars.ipynb
 │   ├── ConvNeXt_Tiny with freezing - Stanford Cars.ipynb
 │   ├── ConvNeXt_Tiny with freezing v2 - Stanford Cars.ipynb
@@ -63,12 +50,16 @@ TwinCar/
 │   ├── Swin_T - Stanford Cars.ipynb
 │   ├── ViT_B_16_StanfordCars_model.ipynb
 │   ├── deit_tiny_patch16_224 - Stanford Cars.ipynb
+│   │
+│   ├── CompCars Models
 │   ├── 06_compcars_efficientnet_b0_make_model_year.ipynb
 │   ├── EfficientNet_B0 - Comp Cars.ipynb
 │   ├── ConvNeXt_Tiny - Comp Cars.ipynb
 │   ├── CompCars_ViT_model.ipynb
+│   │
 │   ├── 05_batch_prediction_demo.ipynb
 │   └── ml-final-project.ipynb
+│
 ├── models/
 ├── reports/
 ├── scripts/
@@ -78,79 +69,208 @@ TwinCar/
 
 ---
 
-## Model architectures
+## Datasets
 
-**CNN models**
-- EfficientNet B0 — compound-scaling CNN; v1 and v2 compared
-- ConvNeXt Tiny — modern CNN inspired by transformers; includes frozen-layer variants
+### Stanford Cars
 
-**Transformer models**
-- ViT B-16 — pure transformer for image classification
-- Swin-T — hierarchical transformer with shifted windows
-- DeiT (tiny_patch16_224) — data-efficient transformer with distillation
+A fine-grained vehicle classification dataset containing approximately 16,000 images across 196 vehicle categories. It is widely used for benchmarking car recognition models.
+
+### CompCars
+
+A large-scale automotive dataset containing over 30,000 images with detailed annotations, including vehicle make, model, and year. It is suitable for both classification and attribute prediction tasks.
 
 ---
 
-## Datasets
+## Model Architectures
 
-| Dataset      | Size     | Classes / Attributes                     | Notes                               |
-|--------------|----------|------------------------------------------|-------------------------------------|
-| Stanford Cars| ~16K imgs| 196 fine-grained car classes             | Train/val/test splits in notebooks  |
-| CompCars     | ~30K imgs| Make, model, year + attribute annotations| Multi-task learning experiments     |
+### CNN-Based Models
+
+#### EfficientNet-B0
+
+EfficientNet uses compound scaling to balance network depth, width, and resolution. Multiple versions are included to evaluate the impact of training and optimization strategies.
+
+#### ConvNeXt-Tiny
+
+A modern CNN architecture inspired by Vision Transformers while retaining the efficiency and simplicity of convolutional networks. Experiments include both fully trainable and partially frozen variants.
+
+### Transformer-Based Models
+
+#### Vision Transformer (ViT-B/16)
+
+A pure transformer architecture that processes images as sequences of patches for image classification.
+
+#### Swin Transformer (Swin-T)
+
+A hierarchical transformer architecture that uses shifted-window attention for efficient feature extraction.
+
+#### DeiT
+
+A data-efficient transformer model designed to achieve strong performance with reduced training requirements.
+
+---
+
+## Installation
+
+### Prerequisites
+
+* Python 3.8+
+* CUDA-capable GPU (recommended)
+* Jupyter Notebook
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/dragicakostoska/TwinCar.git
+cd TwinCar
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Dependencies
+
+Core libraries used throughout the project include:
+
+* PyTorch and TorchVision
+* NumPy and Pandas
+* Pillow
+* Hugging Face Datasets
+* Scikit-learn
+* Matplotlib
+* tqdm
+* Jupyter Notebook and IPython Kernel
 
 ---
 
 ## Workflow
 
-1. **Data exploration** — visualize images, inspect class balance, compute statistics
-2. **Data preparation** — augmentations, splits, data loaders
-3. **Model training** — select architecture + dataset, configure hyperparameters, train
-4. **Evaluation** — metrics (accuracy, precision, recall, F1), confusion matrices, loss curves, inference time
-5. **Inference** — batch predictions with confidence scores and visualization
+### 1. Data Exploration
+
+`01_data_exploration.ipynb`
+
+* Explore dataset characteristics
+* Visualize class distributions
+* Inspect image samples and dataset statistics
+
+### 2. Data Preparation
+
+`02_data_preparation.ipynb`
+
+* Apply preprocessing and augmentation techniques
+* Create training, validation, and test splits
+* Build dataset loaders and transformations
+
+### 3. Model Training
+
+* Select the desired architecture notebook
+* Configure hyperparameters
+* Train using transfer learning or fine-tuning
+* Monitor performance throughout training
+
+### 4. Evaluation
+
+* Analyze classification metrics
+* Generate confusion matrices
+* Visualize training and validation curves
+* Compare model performance across architectures
+
+### 5. Inference
+
+`05_batch_prediction_demo.ipynb`
+
+* Load trained models
+* Run predictions on image batches
+* Visualize outputs and confidence scores
 
 ---
 
-## Training strategies and findings
+## Training Strategies
 
-- **Transfer learning**: full fine-tuning vs. freezing early layers
-- **Findings**:
-  - EfficientNet B0 v2 improves over v1
-  - ConvNeXt provides strong performance with efficient computation
-  - Vision Transformers deliver competitive results with different inductive biases
-- Each experiment includes per-class metrics, confusion matrices, and training/validation curves
+The project investigates two common transfer learning approaches:
+
+### Fine-Tuning
+
+All network layers are trained starting from pretrained weights, allowing the model to adapt fully to the target dataset.
+
+### Feature Extraction
+
+Earlier layers are frozen while only the classification head is trained. This reduces training time and helps preserve pretrained feature representations.
+
+---
+
+## Evaluation Metrics
+
+Each evaluation notebook provides:
+
+* Top-1 and Top-5 Accuracy
+* Precision, Recall, and F1 Score
+* Per-class performance analysis
+* Confusion matrices
+* Training and validation loss curves
+* Inference speed comparisons
+* Prediction visualizations
+
+---
+
+## Key Observations
+
+* EfficientNet-B0 v2 improves upon the baseline v1 configuration.
+* ConvNeXt-Tiny achieves strong performance while maintaining computational efficiency.
+* Transformer-based architectures provide competitive results and different representational advantages compared to CNNs.
+* Transfer learning significantly reduces training requirements while maintaining strong classification accuracy.
 
 ---
 
 ## Customization
 
-- **New datasets**: update data loading in `02_data_preparation.ipynb`
-- **New architectures**: add notebooks following the naming convention
-- **Hyperparameters**: adjust learning rate, batch size, epochs in training notebooks
-- **Task changes**: adapt for other automotive tasks or multi-task setups
+The project can be extended in several ways:
+
+* Integrate additional automotive datasets
+* Add new model architectures
+* Experiment with alternative hyperparameters
+* Explore multi-task learning objectives
+* Implement custom data augmentation pipelines
 
 ---
 
-## Future improvements
+## Future Work
 
-- Convert notebooks to modular Python scripts
-- Implement ensemble methods
-- Add augmentations: Mixup, Cutout, RandAugment
-- Explore knowledge distillation
-- Efficient inference: ONNX, TensorRT
-- Model serving API
-- Comparative performance report
+* Convert notebook workflows into modular Python packages
+* Implement model ensembling techniques
+* Add advanced augmentation methods such as MixUp and RandAugment
+* Explore knowledge distillation strategies
+* Optimize deployment using ONNX or TensorRT
+* Develop an inference API
+* Create a unified benchmark report across all experiments
 
 ---
 
 ## References
 
-- EfficientNet: https://arxiv.org/abs/1905.11946
-- ConvNeXt: https://arxiv.org/abs/2201.03545
-- Vision Transformer: https://arxiv.org/abs/2010.11929
-- Swin Transformer: https://arxiv.org/abs/2103.14030
-- DeiT: https://arxiv.org/abs/2012.12556
+* EfficientNet — *Scaling Convolutional Neural Networks Efficiently*
+* ConvNeXt — *A ConvNet for the 2020s*
+* Vision Transformer — *An Image is Worth 16×16 Words*
+* Swin Transformer — *Hierarchical Vision Transformer Using Shifted Windows*
+* DeiT — *Data-efficient Image Transformers*
 
 ---
 
-Last updated: June 2026  
-Repository: https://github.com/dragicakostoska/TwinCar
+## Contributing
+
+Contributions, suggestions, and bug reports are welcome. Feel free to open an issue or submit a pull request.
+
+---
+
+## License
+
+This project is provided for educational and research purposes.
+
+
+---
+
+**Last Updated:** June 2026
